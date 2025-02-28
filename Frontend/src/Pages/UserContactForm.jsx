@@ -29,7 +29,7 @@ function UserContactForm() {
       const applyForThisJobFunction =async (e) => {
         e.preventDefault();
         try {
-            const response=await fetch(`http://localhost:4000/api/applyForJob/${id}`,{
+            const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/applyForJob/${id}`,{
               method:"POST",
               headers: {
                 "Content-Type": "application/json",

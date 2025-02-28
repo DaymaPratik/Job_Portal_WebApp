@@ -22,7 +22,7 @@ useEffect(()=>{
   const getJobListArrayFunction=async()=>{
     setShowSpinner(true);
     try {
-      const response=await fetch("http://localhost:4000/api/getJobList",{
+      const response=await fetch("https://job-portal-webapp-5wai.onrender.com/api/getJobList",{
         method:"GET",
         credentials:"include"
       })

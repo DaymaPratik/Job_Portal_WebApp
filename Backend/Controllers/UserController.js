@@ -122,4 +122,7 @@ const deleteFromContactUsFromListFunction=async(req,res)=>{
 
 
 
-module.exports={registerUserFunction,deleteFromContactUsFromListFunction,loginUserFunction,applyForThisJobFunction,getAllContactUsFromListFunction}
+module.exports={registerUserFunction,
+    deleteFromContactUsFromListFunction
+    ,loginUserFunction,applyForThisJobFunction
+    ,getAllContactUsFromListFunction}

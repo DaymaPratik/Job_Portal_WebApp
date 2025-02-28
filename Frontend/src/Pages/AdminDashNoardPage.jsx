@@ -25,7 +25,7 @@ function AdminDashNoardPage() {
         const getJobListArrayFunction=async()=>{
           setShowSpinner(true)
           try {
-            const response=await fetch("http://localhost:4000/api/getJobList",{
+            const response=await fetch("https://job-portal-webapp-5wai.onrender.com/api/getJobList",{
               method:"GET",
               credentials:"include"
             })
@@ -47,14 +47,14 @@ function AdminDashNoardPage() {
         const getAllJobsRequestObejctsFunction=async()=>{
           setShowSpinner(true);
           try {
-            const response=await fetch("http://localhost:4000/api/contactUsFromList",{
+            const response=await fetch("https://job-portal-webapp-5wai.onrender.com/api/contactUsFromList",{
               method:"GET",
               credentials:"include"
             })
             const data=await response.json();
             console.log(data);
             
-            // setJobRequestArray(data.arrayOfAllJobRequests);
+            setJobRequestArray(data.arrayOfAllJobRequests);
             setTimeout(()=>{
               setShowSpinner(false);
             },1000)
@@ -93,7 +93,7 @@ function AdminDashNoardPage() {
         e.preventDefault();
         console.log("Job Posted:", formData);
         try {
-            const response=await fetch("http://localhost:4000/api/admin/creatNewJob",{
+            const response=await fetch("https://job-portal-webapp-5wai.onrender.com/api/admin/creatNewJob",{
                 method:"POST",
                 credentials:"include",
                 headers: {
@@ -126,7 +126,7 @@ function AdminDashNoardPage() {
 
       const deleteJobPostFunction=async(id)=>{
            try {
-            const response=await fetch(`http://localhost:4000/api/deleteJobPost/${id}`,{
+            const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/deleteJobPost/${id}`,{
                 method:"GET",
                 credentials:"include",
             })
@@ -154,7 +154,7 @@ function AdminDashNoardPage() {
 
       const deleteAppicantsDetailsFunction=async(id)=>{
         try {
-          const response=await fetch(`http://localhost:4000/api/deleteFromContactUsFromList/${id}`,{
+          const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/deleteFromContactUsFromList/${id}`,{
               method:"GET",
               credentials:"include",
           })

@@ -4,11 +4,19 @@ const mongoose=require('mongoose');
 const app=express();
 const JobsRouter=require("./Routes/getJobListRouter")
 const UserAuthRouter=require('./Routes/UserRouter');
+const allowedOrigins = ['https://job-portal-web-app-pratik-daymas-projects.vercel.app/',
+                        'https://job-portal-web-app-git-main-pratik-daymas-projects.vercel.app/'];
 app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true,
-    methods: 'POST,GET',
-}))
+     origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+             callback(new Error('Not allowed by CORS'));
+                                }
+        },
+        credentials: true,
+         methods: 'POST,GET',
+}));
 app.use(express.json());
 
 
@@ -18,7 +26,7 @@ app.use(UserAuthRouter)
 app.listen(4000,()=>{
     console.log("App is listening at prot 4000");
 })
-mongoose.connect('mongodb://localhost:27017/Jobs_WebPortal_Database')
+mongoose.connect('mongodb+srv://pratikdayma45:LzJlylhbT6B09Fqd@cluster0.cpq5ooo.mongodb.net/Jobs_WebPortal_Database')
 .then(()=>{console.log("DB Connected Successfully");
 })
 .catch((error)=>{console.log("Error connection Db",error);
