@@ -6,7 +6,8 @@ const JobsRouter=require("./Routes/getJobListRouter")
 const UserAuthRouter=require('./Routes/UserRouter');
 
 app.use(cors({
-     origin: "*",
+     origin: 'https://job-portal-web-app-pratik-daymas-projects.vercel.app',
+    credentials: true,
     methods: 'POST,GET',
 }));
 app.use(express.json());
