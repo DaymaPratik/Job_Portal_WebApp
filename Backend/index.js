@@ -4,8 +4,8 @@ const mongoose=require('mongoose');
 const app=express();
 const JobsRouter=require("./Routes/getJobListRouter")
 const UserAuthRouter=require('./Routes/UserRouter');
-const allowedOrigins = ['https://job-portal-web-app-pratik-daymas-projects.vercel.app/',
-                        'https://job-portal-web-app-git-main-pratik-daymas-projects.vercel.app/'];
+const allowedOrigins = ['https://job-portal-web-app-pratik-daymas-projects.vercel.app',
+                        'https://job-portal-web-app-git-main-pratik-daymas-projects.vercel.app'];
 app.use(cors({
      origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
