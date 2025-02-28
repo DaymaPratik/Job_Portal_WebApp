@@ -7,13 +7,7 @@ const UserAuthRouter=require('./Routes/UserRouter');
 const allowedOrigins = ['https://job-portal-web-app-pratik-daymas-projects.vercel.app',
                         'https://job-portal-web-app-git-main-pratik-daymas-projects.vercel.app'];
 app.use(cors({
-     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-             callback(new Error('Not allowed by CORS'));
-                                }
-        },
+     origin: "*",
         credentials: true,
          methods: 'POST,GET',
 }));
