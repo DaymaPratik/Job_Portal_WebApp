@@ -21,10 +21,11 @@ function AuthPage() {
           "Content-Type": "application/json",
       },
         credentials:"include",
-        body:JSON.stringify(adminAuthObject)
+        body:JSON.stringify(adminAuthObject),
         
       })
       const data=await response.json();
+      console.log(data);
       setIsAdminLoggedIn(true);
       sessionStorage.setItem('isAdminLoggedIn',JSON.stringify(true));
       toast.success('Admin Logged In Successfully!', {
@@ -38,7 +39,7 @@ function AuthPage() {
                   theme: "dark",
                   });
       navigate('/adminDashboard')
-      console.log(data);
+      
     } catch (error) {
       console.log("Error in frontend while siging in user",error);
       
