@@ -1,3 +1,5 @@
+
+
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
 import  { Link,useParams } from 'react-router-dom'
@@ -27,7 +29,7 @@ function JobDetailsPage() {
     setShowSpinner(true)
     const getJobDetailsFunction=async()=>{
       try {
-          const response=await fetch(`http://localhost:4000/api/getJobDetails/${jobid}`,{
+          const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/getJobDetails/${jobid}`,{
             method:"GET",
             credentials:"include"
           })
