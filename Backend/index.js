@@ -19,7 +19,7 @@ app.use(UserAuthRouter)
 app.listen(4000,()=>{
     console.log("App is listening at prot 4000");
 })
-mongoose.connect(':mongodb+srv://pratikdayma45:LzJlylhbT6B09Fqd@cluster0.cpq5ooo.mongodb.net/Jobs_WebPortal_Database')
+mongoose.connect('mongodb+srv://pratikdayma45:LzJlylhbT6B09Fqd@cluster0.cpq5ooo.mongodb.net/Jobs_WebPortal_Database')
 .then(()=>{console.log("DB Connected Successfully");
 })
 .catch((error)=>{console.log("Error connection Db",error);
