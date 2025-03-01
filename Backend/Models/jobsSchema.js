@@ -21,7 +21,7 @@ const JobsSchema=new mongoose.Schema({
     last_registration_date:{
         type:String
     },
-    reuired_stream:{
+    required_stream:{
         type:String
     },
     description:{

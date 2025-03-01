@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import Sidebar from "../Components/Sidebar";
@@ -5,6 +6,7 @@ import { SideBarContext } from '../context/SideBarContextProvider';
 import { toast } from 'react-toastify';
 function UserContactForm() {
     const {showSidebar,setShowSidebar}=useContext(SideBarContext)
+     const [emptyCredentials,setEmptyCredentials]=useState(false);
     const navigate=useNavigate();
     const {id}=useParams();
     useEffect(()=>{
@@ -28,6 +30,9 @@ function UserContactForm() {
     
       const applyForThisJobFunction =async (e) => {
         e.preventDefault();
+        if(!(formData.name && formData.education && formData.skills && formData.email && formData.phone)){
+            setEmptyCredentials(true);
+        }
         try {
             const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/applyForJob/${id}`,{
               method:"POST",
@@ -38,6 +43,7 @@ function UserContactForm() {
               body:JSON.stringify(formData)
           })
           const data=await response.json();
+         if(data.success){
           toast.success("Applicant's Details Submited Successfully!", {
             position: "top-center",
             autoClose: 5000,
@@ -48,8 +54,9 @@ function UserContactForm() {
             progress: undefined,
             theme: "dark",
             });
-          console.log(data);
+          // console.log(data);
           navigate("/");
+         }
           }catch (error) {
             console.log("Error while applying for a job Frontend",error);
             
@@ -124,6 +131,16 @@ function UserContactForm() {
               className="w-full p-2 border rounded" 
             />
           </div>
+             
+
+          {
+            emptyCredentials
+            &&
+            <h5 className='font-semibold text-center w-[90%] mx-auto text-[17px] min-[400px]:text-[20px]   min-[480px]:text-[25px] bg-[#ff000099] p-2 rounded-[10px] mb-3 mt-3 '>All Fields Required</h5>
+        }
+
+
+
           <button type="submit" className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg
            hover:bg-blue-700 w-full">
             Submit

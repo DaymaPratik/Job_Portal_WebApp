@@ -42,12 +42,12 @@ const loginUserFunction=async(req,res)=>{
        
     const doesAdminExists = await UserAuthModel.findOne({ username });
     if (!doesAdminExists) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ success:false, message: 'Invalid credentials' });
     }
     
     const isPassCorrect = await bcryptjs.compare(password, doesAdminExists.password);
     if (!isPassCorrect) {
-        return res.status(400).json({ message: 'Invalid credentials' });
+        return res.status(400).json({ success:false, message: 'Invalid credentials' });
     }
     res.json({
         success:true,
@@ -55,15 +55,24 @@ const loginUserFunction=async(req,res)=>{
     })
     } catch (error) {
         console.log("Error in backend while login user",error);
+        res.json({
+            success:false,
+            message:"Error in backend while login user"
+        })
         
     }
 }
 const applyForThisJobFunction=async(req,res)=>{
     let {name,education,skills,email,phone}=req.body;
     const {jobid}=req.params;
-    console.log(jobid);
-    console.log(req.body);
-    
+    // console.log(jobid);
+    // console.log(req.body);
+    if(!(name && education && skills && email && phone)){
+        return res.json({
+            success:false,
+            message:"All field required"
+        })
+    }
     try {
         const newlyAppliedJobObject=await NormalUserContactFormModel.create(
             {name,education,skills,email,phone,jobid}

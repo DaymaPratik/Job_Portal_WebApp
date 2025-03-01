@@ -14,6 +14,7 @@ function AdminDashNoardPage() {
     const [jobRequestArray,setJobRequestArray]=useState([]);
     const {isAdminLoggedIn}=useContext(AdminAuthContext);
     const {showSidebar,setShowSidebar,showSpinner,setShowSpinner}=useContext(SideBarContext);
+    const [emptyCredentials,setEmptyCredentials]=useState(false);
     const navigate=useNavigate();
     useEffect(()=>{
         setShowSidebar(false);
@@ -34,7 +35,7 @@ function AdminDashNoardPage() {
             setTimeout(()=>{
               setShowSpinner(false);
             },1000)
-            console.log(data);
+            // console.log(data);
             
           } catch (error) {
             setTimeout(()=>{
@@ -52,13 +53,13 @@ function AdminDashNoardPage() {
               credentials:"include"
             })
             const data=await response.json();
-            console.log(data);
+            // console.log(data);
             
             setJobRequestArray(data.arrayOfAllJobRequests);
             setTimeout(()=>{
               setShowSpinner(false);
             },1000)
-            console.log(data);
+            // console.log(data);
             
           } catch (error) {
             setTimeout(()=>{
@@ -89,9 +90,13 @@ function AdminDashNoardPage() {
           [name]: type === "checkbox" ? checked : value,
         });
       };
+
     const createANewJobOpeningFunction =async (e) => {
         e.preventDefault();
-        console.log("Job Posted:", formData);
+        if( formData.job_id=="" || formData.tittle=="" || formData.company=="" || formData.location==""  || formData.payscale=="" || formData.description=="" || formData.last_registration_date=="" || formData.required_stream=="" ){
+          setEmptyCredentials(true);
+        }
+        // console.log("Job Posted:", formData);
         try {
             const response=await fetch("https://job-portal-webapp-5wai.onrender.com/api/admin/creatNewJob",{
                 method:"POST",
@@ -103,6 +108,20 @@ function AdminDashNoardPage() {
             })
             const data=await response.json();
             console.log(data);
+            
+            if(data.success){
+              window.location.reload();
+            toast.success('Job Post Added Successfully!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+            // console.log(data);
             setFormData({
                 job_id: "",
                 job_tittle: "",
@@ -114,6 +133,7 @@ function AdminDashNoardPage() {
                 required_stream: "",
                 description:""
               })
+            }
             
         } catch (error) {
             console.log("Error in frontend while postng new job",error);
@@ -145,7 +165,7 @@ function AdminDashNoardPage() {
               progress: undefined,
               theme: "dark",
               });
-            console.log(data);
+            // console.log(data);
            } catch (error) {
             console.log("Error while deleting job frontend",error);
             
@@ -191,7 +211,7 @@ function AdminDashNoardPage() {
   
       {/* ADMIN DASHOBOARD COVER */}
        <main className='w-full   relative'>
-         <section className='h-fit  min-h-[50vh] w-full bg-center bg-cover bg-no-repeat flex justify-center items-center justify-center gap-5 sm:pl-10 
+         <section className='h-fit  min-h-[50vh] w-full bg-center bg-cover bg-no-repeat flex  items-center justify-center gap-5 sm:pl-10 
          bg-[url("https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")]'>
            <h1 className='text-[25px] max-sm:text-center xs:text-[30px] sm:text-[35px] md:text-[40px] font-bold '>
              "Welcome To Admin Dashboard"
@@ -262,7 +282,16 @@ function AdminDashNoardPage() {
           </label>
               
         </form>
-           <button className=" bg-blue-500 w-[40%] block mx-auto text-white p-2 rounded hover:bg-blue-600"
+             
+        {
+            emptyCredentials
+            &&
+            <h5 className='font-semibold text-center w-[50%] mx-auto text-[17px] min-[400px]:text-[20px]   min-[480px]:text-[25px] bg-[#ff000099] p-2 rounded-[10px] mb-5 my-2'>All Fields Required</h5>
+        }
+    
+          
+
+           <button className=" bg-blue-500 w-[40%] block my-2 mx-auto text-white p-2 rounded hover:bg-blue-600"
             onClick={createANewJobOpeningFunction}>Enter Post Job</button>
          </section>
         </main>

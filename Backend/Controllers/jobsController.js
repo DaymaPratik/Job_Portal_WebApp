@@ -40,6 +40,12 @@ const getJobDetailsFunction=async(req,res)=>{
 
 const createNewjobFunction=async(req,res)=>{
     const {job_id,tittle,company,location,remote,payscale,last_registration_date,required_stream,description}=req.body
+    if(!(job_id && tittle && company && location  && payscale && last_registration_date && required_stream &&description)){
+        return res.json({
+            success:false,
+            message:"All field required"
+        })
+    }
     try {
         const newlyAddedJobObject=await JobsListModel.create({
             job_id,

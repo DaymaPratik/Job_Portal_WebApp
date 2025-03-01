@@ -8,6 +8,7 @@ import Sidebar from '../Components/Sidebar';
 import { AdminAuthContext } from '../context/AdminAuthContextProvider';
 import LoaderPage from './LoaderPage';
 import ErrorBox from '../Components/ErrorBox';
+import { toast } from 'react-toastify';
 
 function HomePage() {
  
@@ -31,7 +32,7 @@ useEffect(()=>{
       setTimeout(()=>{
         setShowSpinner(false);
       },1000)
-      console.log(data);
+      // console.log(data); 
       
     } catch (error) {
       console.log("Error in getting list of jobs frontend",error)
@@ -42,6 +43,33 @@ useEffect(()=>{
   }
   getJobListArrayFunction();
 },[])
+const deleteJobPostFunction=async(id)=>{
+           try {
+            const response=await fetch(`https://job-portal-webapp-5wai.onrender.com/api/deleteJobPost/${id}`,{
+                method:"GET",
+                credentials:"include",
+            })
+            const data=await response.json();
+            const filteredArray=jobsArray.filter((item)=>{
+              return item._id!=id;
+            })
+            setJobsArray(filteredArray);
+            toast.success('Job Post Deleted Successfully!', {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: false,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+              });
+            // console.log(data);
+           } catch (error) {
+            console.log("Error while deleting job frontend",error);
+            
+           }
+      }
  
   return (
      
@@ -92,12 +120,22 @@ useEffect(()=>{
                 </p>
                 <p>{item.remote}</p>
                 <div className='flex w-[100%] text-[15px] sm:text-[18px] font-semibold'>
-                <button className='bg-[#00bcff87]  transition ease-in duration-150  
+                {
+                  isAdminLoggedIn
+                  ?
+                  <button className='bg-[#ff000087]  transition ease-in duration-150  
+                  hover:bg-[#ff0000] py-2  w-[50%] block mx-auto rounded-[5px] cursor-pointer px-1 sm:px-2'
+                  onClick={()=>{deleteJobPostFunction(item._id)}} >
+                    Delete
+                  </button>
+                  :
+                  <button className='bg-[#00bcff87]  transition ease-in duration-150  
                 hover:bg-[#00BCFF] py-2 mx-1 w-[50%] rounded-[5px] cursor-pointer px-1 sm:px-2'>
                  <Link to={`/userContactForm/${item._id}`}>
                  Apply Now
                  </Link>
                 </button>
+                }
                  <button className=' mx-1 w-[50%] '>
                  <Link to={`/jobDetails/${item._id}`} className='py-2  transition ease-in duration-150 
                   hover:bg-[#00b602] bg-[#78e779] rounded-[5px] w-full h-full block px-1 sm:px-2'>
