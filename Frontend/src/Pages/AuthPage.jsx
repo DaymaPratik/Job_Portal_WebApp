@@ -15,7 +15,7 @@ function AuthPage() {
     e.preventDefault();
     console.log(adminAuthObject);
     try {
-      const response=await fetch('https://job-portal-webapp-5wai.onrender.com/api/registerUser',{
+      const response=await fetch('https://job-portal-webapp-5wai.onrender.com/api/loginUser',{
         method:"POST",
         headers: {
           "Content-Type": "application/json",
